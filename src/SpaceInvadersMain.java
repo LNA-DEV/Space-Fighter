@@ -7,22 +7,28 @@ import java.awt.event.KeyListener;
 
 public class SpaceInvadersMain extends JPanel implements Runnable, ActionListener, KeyListener
 {
-    JFrame window;
+    JFrame frame;
     SpaceShip player;
     private Timer timer;
     private Thread GameThread;
 
+
     public static void main(String[] args)
     {
+        new SpaceInvadersMain();
+    }
 
+    SpaceInvadersMain()
+    {
+        frame = new JFrame("SpaceInvaders");
+        frame.setSize(500, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBackground(Color.BLACK);
+        frame.add(this);
+        frame.setVisible(true);
     }
 
     protected void paintComponent(Graphics g)
-    {
-
-    }
-
-    public void SpaceInvadersMain()
     {
 
     }

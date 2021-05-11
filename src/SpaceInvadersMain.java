@@ -23,14 +23,22 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         frame = new JFrame("SpaceInvaders");
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBackground(Color.BLACK);
+        this.setBackground(Color.BLACK);
         frame.add(this);
         frame.setVisible(true);
+
+        player = new SpaceShip(100, 100);
+
+        GameThread = new Thread(this);
+        GameThread.start();
     }
 
     protected void paintComponent(Graphics g)
     {
+        super.paintComponent(g); //super-Aufruf nicht vergessen
 
+        g.setColor(Color.red);
+        g.fillRect(player.x, player.y, player.width,player.height);
     }
 
     @Override
@@ -60,6 +68,15 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     @Override
     public void run()
     {
-
+        while(true)
+        {
+            try
+            {
+                Thread.sleep(20);
+            }
+            catch (InterruptedException e) {}
+            player.x += 1;
+            repaint();
+        }
     }
 }

@@ -1,3 +1,5 @@
+import jdk.nashorn.internal.ir.IfNode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -56,7 +58,23 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     @Override
     public void keyPressed(KeyEvent e)
     {
-
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+        {
+            player.direction = MoveDirection.East;
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_LEFT)
+        {
+            player.direction = MoveDirection.West;
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_UP)
+        {
+            player.direction = MoveDirection.North;
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_DOWN)
+        {
+            player.direction = MoveDirection.South;
+        }
+        player.move(frame);
     }
 
     @Override
@@ -68,6 +86,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     @Override
     public void run()
     {
+        frame.requestFocusInWindow();
+        frame.addKeyListener(this);
         while(true)
         {
             try
@@ -75,7 +95,6 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                 Thread.sleep(20);
             }
             catch (InterruptedException e) {}
-            player.x += 1;
             repaint();
         }
     }

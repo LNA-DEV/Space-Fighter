@@ -29,19 +29,19 @@ public class Alien extends Rectangle
 
     public void move(JFrame frame)
     {
-        if (direction == MoveDirection.North && y >= 10)
+        if (direction == MoveDirection.North)
         {
             y -= speed;
         }
-        else if (direction == MoveDirection.South && y <= frame.getSize().height - 125)
+        else if (direction == MoveDirection.South)
         {
             y += speed;
         }
-        else if (direction == MoveDirection.West && x >= 10)
+        else if (direction == MoveDirection.West)
         {
             x -= speed;
         }
-        else if (direction == MoveDirection.East && x <= frame.getSize().width - 75)
+        else if (direction == MoveDirection.East)
         {
             x += speed;
         }

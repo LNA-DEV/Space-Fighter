@@ -6,12 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Enumeration;
+import java.util.Random;
+import java.util.Vector;
 
 public class SpaceInvadersMain extends JPanel implements Runnable, ActionListener, KeyListener
 {
     JFrame frame;
     SpaceShip player;
-    Alien alien;
+    Vector<Alien> aliens = new Vector<Alien>();
     private Timer timer;
     private Thread GameThread;
 
@@ -32,8 +35,6 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
         player = new SpaceShip(100, 100);
 
-        alien = new Alien(200, 200);
-
         timer = new Timer(2000, this);
         timer.start();
 
@@ -46,13 +47,23 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         super.paintComponent(g); //super-Aufruf nicht vergessen
 
         player.draw(g,this);
-        alien.draw(g, this);
+
+        Enumeration<Alien> AlienEnum = aliens.elements();
+        while(AlienEnum.hasMoreElements())
+        {
+            Alien alien = AlienEnum.nextElement();
+            alien.draw(g,this);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        System.out.println("neu");
+        Random random = new Random();
+        int randomX = random.nextInt(frame.getSize().width);
+        int y = -10;
+        Alien x = new Alien(randomX, y);
+        aliens.addElement(x);
     }
 
     @Override
@@ -99,7 +110,12 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
             try
             {
                 Thread.sleep(20);
-                alien.move(frame);
+                Enumeration<Alien> AlienEnum = aliens.elements();
+                while(AlienEnum.hasMoreElements())
+                {
+                    Alien alien = AlienEnum.nextElement();
+                    alien.move(frame);
+                }
             }
             catch (InterruptedException e) {}
             repaint();

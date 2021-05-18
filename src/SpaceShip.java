@@ -17,7 +17,7 @@ public class SpaceShip extends Rectangle
         this.width = 50;
         this.height = 50;
         direction = MoveDirection.Idle;
-        speed = 5;
+        speed = 10;
     }
 
     public void draw(Graphics g, Component c)

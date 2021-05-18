@@ -12,7 +12,6 @@ public class Alien extends Rectangle
     {
         img = 	Toolkit.getDefaultToolkit().getImage(getClass().
                 getResource("Alien.gif"));
-        //This bezieht sich auf die Klasse und ansonsten wird das x aus der Methode verwendet
         this.x = x;
         this.y = y;
         this.width = 50;

@@ -27,13 +27,13 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     SpaceInvadersMain()
     {
         frame = new JFrame("SpaceInvaders");
-        frame.setSize(500, 500);
+        frame.setSize(500, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBackground(Color.BLACK);
         frame.add(this);
         frame.setVisible(true);
 
-        player = new SpaceShip(100, 100);
+        player = new SpaceShip(frame.getSize().width / 2, frame.getSize().height - 120);
 
         timer = new Timer(2000, this);
         timer.start();
@@ -114,6 +114,10 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                 while(AlienEnum.hasMoreElements())
                 {
                     Alien alien = AlienEnum.nextElement();
+                    if (alien.y > frame.getSize().height)
+                    {
+                        aliens.remove(alien);
+                    }
                     alien.move(frame);
                 }
             }

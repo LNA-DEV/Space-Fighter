@@ -11,7 +11,6 @@ public class SpaceShip extends Rectangle
     {
         img = 	Toolkit.getDefaultToolkit().getImage(getClass().
                 getResource("Rocket.gif"));
-        //This bezieht sich auf die Klasse und ansonsten wird das x aus der Methode verwendet
         this.x = x;
         this.y = y;
         this.width = 50;

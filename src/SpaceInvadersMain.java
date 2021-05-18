@@ -11,6 +11,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 {
     JFrame frame;
     SpaceShip player;
+    Alien alien;
     private Timer timer;
     private Thread GameThread;
 
@@ -31,6 +32,11 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
         player = new SpaceShip(100, 100);
 
+        alien = new Alien(200, 200);
+
+        timer = new Timer(2000, this);
+        timer.start();
+
         GameThread = new Thread(this);
         GameThread.start();
     }
@@ -39,14 +45,14 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     {
         super.paintComponent(g); //super-Aufruf nicht vergessen
 
-        g.setColor(Color.red);
-        g.fillRect(player.x, player.y, player.width,player.height);
+        player.draw(g,this);
+        alien.draw(g, this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-
+        System.out.println("neu");
     }
 
     @Override
@@ -93,6 +99,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
             try
             {
                 Thread.sleep(20);
+                alien.move(frame);
             }
             catch (InterruptedException e) {}
             repaint();

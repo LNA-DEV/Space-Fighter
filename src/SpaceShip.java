@@ -5,9 +5,12 @@ public class SpaceShip extends Rectangle
 {
     public int speed;
     public MoveDirection direction;
+    private Image img;
 
     public SpaceShip(int x, int y)
     {
+        img = 	Toolkit.getDefaultToolkit().getImage(getClass().
+                getResource("Rocket.gif"));
         //This bezieht sich auf die Klasse und ansonsten wird das x aus der Methode verwendet
         this.x = x;
         this.y = y;
@@ -17,13 +20,19 @@ public class SpaceShip extends Rectangle
         speed = 5;
     }
 
+    public void draw(Graphics g, Component c)
+    {
+        g.drawImage(img, this.x , this.y, c);
+        return;
+    }
+
     public void move(JFrame frame)
     {
         if (direction == MoveDirection.North && y >= 10)
         {
             y -= speed;
         }
-        else if (direction == MoveDirection.South && y <= frame.getSize().height - 100)
+        else if (direction == MoveDirection.South && y <= frame.getSize().height - 125)
         {
             y += speed;
         }

@@ -1,5 +1,3 @@
-import jdk.nashorn.internal.ir.IfNode;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +12,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 {
     JFrame frame;
     SpaceShip player;
+    HealthBar healthBar;
     Vector<Alien> aliens = new Vector<Alien>();
     private Timer timer;
     private Thread GameThread;
@@ -29,11 +28,13 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         frame = new JFrame("SpaceInvaders");
         frame.setSize(500, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.DARK_GRAY);
         frame.add(this);
         frame.setVisible(true);
 
         player = new SpaceShip(frame.getSize().width / 2, frame.getSize().height - 120);
+
+        healthBar = new HealthBar(player.Health);
 
         timer = new Timer(2000, this);
         timer.start();
@@ -48,6 +49,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
         player.draw(g,this);
 
+        healthBar.draw(g, this);
+
         Enumeration<Alien> AlienEnum = aliens.elements();
         while(AlienEnum.hasMoreElements())
         {
@@ -60,7 +63,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     public void actionPerformed(ActionEvent e)
     {
         Random random = new Random();
-        int randomX = random.nextInt(frame.getSize().width);
+        int randomX = random.nextInt(frame.getSize().width - 50);
         int y = -10;
         Alien x = new Alien(randomX, y);
         aliens.addElement(x);
@@ -114,11 +117,13 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                 while(AlienEnum.hasMoreElements())
                 {
                     Alien alien = AlienEnum.nextElement();
+                    alien.move(frame);
+
+                    //Delete aliens if they hit the bottom of the screen
                     if (alien.y > frame.getSize().height)
                     {
                         aliens.remove(alien);
                     }
-                    alien.move(frame);
                 }
             }
             catch (InterruptedException e) {}

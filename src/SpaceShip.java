@@ -5,6 +5,7 @@ public class SpaceShip extends Rectangle
 {
     public int speed;
     public MoveDirection direction;
+    public int Health = 3;
     private Image img;
 
     public SpaceShip(int x, int y)
@@ -16,7 +17,7 @@ public class SpaceShip extends Rectangle
         this.width = 50;
         this.height = 50;
         direction = MoveDirection.Idle;
-        speed = 10;
+        speed = 13;
     }
 
     public void draw(Graphics g, Component c)

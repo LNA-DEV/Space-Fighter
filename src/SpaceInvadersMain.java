@@ -13,8 +13,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     JFrame frame;
     SpaceShip player;
     HealthBar healthBar;
-    Vector<Alien> aliens = new Vector<Alien>();
-    Vector<Bullet> bullets = new Vector<Bullet>();
+    Vector<Alien> aliens = new Vector<>();
+    Vector<Bullet> bullets = new Vector<>();
     Image background;
     private Timer timer;
     private Thread GameThread;
@@ -57,12 +57,14 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         healthBar.draw(g, this);
 
         Enumeration<Alien> AlienEnum = aliens.elements();
-        while (AlienEnum.hasMoreElements()) {
+        while (AlienEnum.hasMoreElements())
+        {
             Alien alien = AlienEnum.nextElement();
             alien.draw(g, this);
         }
         Enumeration<Bullet> BulletsEnum = bullets.elements();
-        while (BulletsEnum.hasMoreElements()) {
+        while (BulletsEnum.hasMoreElements())
+        {
             Bullet bullet = BulletsEnum.nextElement();
             bullet.draw(g, this);
         }
@@ -81,18 +83,26 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     @Override
     public void keyPressed(KeyEvent e)
     {
-        if (e.getKeyCode() == KeyEvent.VK_D) {
+        if (e.getKeyCode() == KeyEvent.VK_D)
+        {
             player.direction = MoveDirection.East;
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_A)
+        {
             player.direction = MoveDirection.West;
-        } else if (e.getKeyCode() == KeyEvent.VK_W) {
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_W)
+        {
             player.direction = MoveDirection.North;
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_S)
+        {
             player.direction = MoveDirection.South;
         }
         player.move(frame);
 
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE)
+        {
             bullets.add(new Bullet(player.x, player.y));
         }
     }
@@ -102,8 +112,10 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     {
         frame.requestFocusInWindow();
         frame.addKeyListener(this);
-        while (true) {
-            try {
+        while (true)
+        {
+            try
+            {
                 Thread.sleep(20);
 
                 healthBar.Health = player.Health;
@@ -112,33 +124,45 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                 while (AlienEnum.hasMoreElements()) {
                     Alien alien = AlienEnum.nextElement();
                     alien.move(frame);
-                    if (CheckCollision(player, alien)) {
+                    if (CheckCollision(player, alien))
+                    {
                         aliens.remove(alien);
                         player.Health -= 1;
                     }
 
                     //Delete aliens if they hit the bottom of the screen
-                    if (alien.y > frame.getSize().height) {
+                    if (alien.y > frame.getSize().height)
+                    {
                         aliens.remove(alien);
                     }
+                }
 
-                    Enumeration<Bullet> BulletsEnum = bullets.elements();
-                    while (BulletsEnum.hasMoreElements()) {
-                        Bullet bullet = BulletsEnum.nextElement();
-                        bullet.move(frame);
+                Enumeration<Bullet> BulletsEnum = bullets.elements();
+                while (BulletsEnum.hasMoreElements())
+                {
+                    Bullet bullet = BulletsEnum.nextElement();
+                    bullet.move(frame);
 
-                        //Delete bullets if they hit the screen
-                        if (bullet.y > frame.getSize().height || bullet.y < 0) {
-                            bullets.remove(bullet);
-                        }
+                    //Delete bullets if they hit the screen
+                    if (bullet.y > frame.getSize().height || bullet.y < 0)
+                    {
+                        bullets.remove(bullet);
+                    }
 
+                    //Collision detection
+                    Enumeration<Alien> AlienEnumeration = aliens.elements();
+                    while (AlienEnumeration.hasMoreElements()) {
+                        Alien alien = AlienEnumeration.nextElement();
                         if (CheckCollision(alien, bullet)) {
                             aliens.remove(alien);
                             bullets.remove(bullet);
                         }
                     }
                 }
-            } catch (InterruptedException e) {
+            }
+            catch (Exception e)
+            {
+                System.out.println(e.getMessage());
             }
             repaint();
         }
@@ -146,7 +170,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
     private boolean CheckCollision(Rectangle rect1, Rectangle rect2)
     {
-        if (rect1.intersects(rect2)) {
+        if (rect1.intersects(rect2))
+        {
             return true;
         }
         return false;

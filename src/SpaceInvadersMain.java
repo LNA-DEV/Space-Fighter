@@ -129,12 +129,19 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         {
             try
             {
+                healthBar.Health = player.Health;
+
                 Thread.sleep(20);
                 Enumeration<Alien> AlienEnum = aliens.elements();
                 while(AlienEnum.hasMoreElements())
                 {
                     Alien alien = AlienEnum.nextElement();
                     alien.move(frame);
+                    if (CheckCollision(player, alien))
+                    {
+                        aliens.remove(alien);
+                        player.Health -= 1;
+                    }
 
                     //Delete aliens if they hit the bottom of the screen
                     if (alien.y > frame.getSize().height)
@@ -152,12 +159,36 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                     //Delete bullets if they hit the screen
                     if (bullet.y > frame.getSize().height || bullet.y < 0)
                     {
-                        aliens.remove(bullet);
+                        bullets.remove(bullet);
+                    }
+                }
+
+                //Hit detection for Alien and Bullet
+                while(AlienEnum.hasMoreElements())
+                {
+                    while(BulletsEnum.hasMoreElements())
+                    {
+                        Bullet bullet = BulletsEnum.nextElement();
+                        Alien alien = AlienEnum.nextElement();
+                        if (CheckCollision(bullet, alien))
+                        {
+                            bullets.remove(bullet);
+                            aliens.remove(alien);
+                        }
                     }
                 }
             }
             catch (InterruptedException e) {}
             repaint();
         }
+    }
+
+    private boolean CheckCollision(Rectangle rect1, Rectangle rect2)
+    {
+        if(rect1.intersects(rect2))
+        {
+            return true;
+        }
+        return false;
     }
 }

@@ -13,8 +13,8 @@ public class SpaceShip extends Rectangle
         img = 	Toolkit.getDefaultToolkit().getImage(getClass().getResource("Rocket.gif"));
         this.x = x;
         this.y = y;
-        this.width = 50;
-        this.height = 50;
+        this.width = 40;
+        this.height = 80;
         direction = MoveDirection.Idle;
         speed = 13;
     }

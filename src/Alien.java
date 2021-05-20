@@ -13,8 +13,8 @@ public class Alien extends Rectangle
         img = 	Toolkit.getDefaultToolkit().getImage(getClass().getResource("Alien.gif"));
         this.x = x;
         this.y = y;
-        this.width = 50;
-        this.height = 50;
+        this.width = 55;
+        this.height = 40;
         direction = MoveDirection.South;
         speed = 2;
     }

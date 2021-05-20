@@ -10,8 +10,7 @@ public class SpaceShip extends Rectangle
 
     public SpaceShip(int x, int y)
     {
-        img = 	Toolkit.getDefaultToolkit().getImage(getClass().
-                getResource("Rocket.gif"));
+        img = 	Toolkit.getDefaultToolkit().getImage(getClass().getResource("Rocket.gif"));
         this.x = x;
         this.y = y;
         this.width = 50;

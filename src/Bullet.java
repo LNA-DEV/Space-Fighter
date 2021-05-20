@@ -1,22 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Alien extends Rectangle
+public class Bullet extends Rectangle
 {
-    public int type;
     public MoveDirection direction;
     private Image img;
     public int speed;
 
-    public Alien(int x, int y)
+    public Bullet(int x, int y)
     {
-        img = 	Toolkit.getDefaultToolkit().getImage(getClass().getResource("Alien.gif"));
+        img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Heart.png"));
         this.x = x;
         this.y = y;
         this.width = 50;
         this.height = 50;
-        direction = MoveDirection.South;
-        speed = 2;
+        direction = MoveDirection.North;
+        speed = 20;
     }
 
     public void draw(Graphics g, Component c)

@@ -14,6 +14,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     SpaceShip player;
     HealthBar healthBar;
     Vector<Alien> aliens = new Vector<Alien>();
+    Vector<Bullet> bullets = new Vector<Bullet>();
+    Image background;
     private Timer timer;
     private Thread GameThread;
 
@@ -32,6 +34,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         frame.add(this);
         frame.setVisible(true);
 
+        background = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Background.gif"));
+
         player = new SpaceShip(frame.getSize().width / 2, frame.getSize().height - 120);
 
         healthBar = new HealthBar(player.Health);
@@ -45,7 +49,9 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
     protected void paintComponent(Graphics g)
     {
-        super.paintComponent(g); //super-Aufruf nicht vergessen
+        super.paintComponent(g);
+
+        g.drawImage(background, 0, 0, this);
 
         player.draw(g,this);
 
@@ -56,6 +62,12 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         {
             Alien alien = AlienEnum.nextElement();
             alien.draw(g,this);
+        }
+        Enumeration<Bullet> BulletsEnum = bullets.elements();
+        while(BulletsEnum.hasMoreElements())
+        {
+            Bullet bullet = BulletsEnum.nextElement();
+            bullet.draw(g,this);
         }
     }
 
@@ -78,23 +90,28 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     @Override
     public void keyPressed(KeyEvent e)
     {
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+        if (e.getKeyCode() == KeyEvent.VK_D)
         {
             player.direction = MoveDirection.East;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_LEFT)
+        else if (e.getKeyCode() == KeyEvent.VK_A)
         {
             player.direction = MoveDirection.West;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_UP)
+        else if (e.getKeyCode() == KeyEvent.VK_W)
         {
             player.direction = MoveDirection.North;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN)
+        else if (e.getKeyCode() == KeyEvent.VK_S)
         {
             player.direction = MoveDirection.South;
         }
         player.move(frame);
+
+        if (e.getKeyCode() == KeyEvent.VK_SPACE)
+        {
+            bullets.add(new Bullet(player.x, player.y));
+        }
     }
 
     @Override
@@ -123,6 +140,19 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                     if (alien.y > frame.getSize().height)
                     {
                         aliens.remove(alien);
+                    }
+                }
+
+                Enumeration<Bullet> BulletsEnum = bullets.elements();
+                while(BulletsEnum.hasMoreElements())
+                {
+                    Bullet bullet = BulletsEnum.nextElement();
+                    bullet.move(frame);
+
+                    //Delete bullets if they hit the screen
+                    if (bullet.y > frame.getSize().height || bullet.y < 0)
+                    {
+                        aliens.remove(bullet);
                     }
                 }
             }

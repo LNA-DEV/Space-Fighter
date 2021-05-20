@@ -1,5 +1,3 @@
-import javafx.application.Application;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +16,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     Vector<Alien> aliens = new Vector<>();
     Vector<Bullet> bullets = new Vector<>();
     Image background;
+    Font gameFont;
+    int Points;
     private Timer timer;
     private Thread GameThread;
 
@@ -34,6 +34,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         this.setBackground(Color.DARK_GRAY);
         frame.add(this);
         frame.setVisible(true);
+
+        gameFont = new Font("Microsoft Gothic UI", 0, 30);
 
         background = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Background.gif"));
 
@@ -53,6 +55,10 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         super.paintComponent(g);
 
         g.drawImage(background, 0, 0, this);
+
+        g.setColor(Color.white);
+        g.setFont(gameFont);
+        g.drawString("Points: " + Points, 325, 50);
 
         player.draw(g, this);
 
@@ -160,6 +166,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                         {
                             aliens.remove(alien);
                             bullets.remove(bullet);
+                            Points++;
                         }
                     }
                 }

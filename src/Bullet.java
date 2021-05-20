@@ -9,11 +9,11 @@ public class Bullet extends Rectangle
 
     public Bullet(int x, int y)
     {
-        img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Heart.png"));
-        this.x = x;
-        this.y = y;
-        this.width = 50;
-        this.height = 50;
+        img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Laser.png"));
+        this.x = x + 10;
+        this.y = y + 10;
+        this.width = 20;
+        this.height = 64;
         direction = MoveDirection.North;
         speed = 20;
     }

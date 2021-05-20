@@ -34,6 +34,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
         this.setBackground(Color.DARK_GRAY);
         frame.add(this);
         frame.setVisible(true);
+        frame.setResizable(false);
 
         gameFont = new Font("Microsoft Gothic UI", 0, 30);
 

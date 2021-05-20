@@ -1,3 +1,5 @@
+import javafx.application.Application;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -151,13 +153,19 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
                     //Collision detection
                     Enumeration<Alien> AlienEnumeration = aliens.elements();
-                    while (AlienEnumeration.hasMoreElements()) {
+                    while (AlienEnumeration.hasMoreElements())
+                    {
                         Alien alien = AlienEnumeration.nextElement();
-                        if (CheckCollision(alien, bullet)) {
+                        if (CheckCollision(alien, bullet))
+                        {
                             aliens.remove(alien);
                             bullets.remove(bullet);
                         }
                     }
+                }
+                if (player.Health == 0)
+                {
+                    System.exit(0);
                 }
             }
             catch (Exception e)

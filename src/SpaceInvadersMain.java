@@ -19,7 +19,6 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     private Timer timer;
     private Thread GameThread;
 
-
     public static void main(String[] args)
     {
         new SpaceInvadersMain();
@@ -53,21 +52,19 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
         g.drawImage(background, 0, 0, this);
 
-        player.draw(g,this);
+        player.draw(g, this);
 
         healthBar.draw(g, this);
 
         Enumeration<Alien> AlienEnum = aliens.elements();
-        while(AlienEnum.hasMoreElements())
-        {
+        while (AlienEnum.hasMoreElements()) {
             Alien alien = AlienEnum.nextElement();
-            alien.draw(g,this);
+            alien.draw(g, this);
         }
         Enumeration<Bullet> BulletsEnum = bullets.elements();
-        while(BulletsEnum.hasMoreElements())
-        {
+        while (BulletsEnum.hasMoreElements()) {
             Bullet bullet = BulletsEnum.nextElement();
-            bullet.draw(g,this);
+            bullet.draw(g, this);
         }
     }
 
@@ -82,37 +79,90 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     }
 
     @Override
-    public void keyTyped(KeyEvent e)
-    {
-
-    }
-
-    @Override
     public void keyPressed(KeyEvent e)
     {
-        if (e.getKeyCode() == KeyEvent.VK_D)
-        {
+        if (e.getKeyCode() == KeyEvent.VK_D) {
             player.direction = MoveDirection.East;
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_A)
-        {
+        } else if (e.getKeyCode() == KeyEvent.VK_A) {
             player.direction = MoveDirection.West;
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_W)
-        {
+        } else if (e.getKeyCode() == KeyEvent.VK_W) {
             player.direction = MoveDirection.North;
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_S)
-        {
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
             player.direction = MoveDirection.South;
         }
         player.move(frame);
 
-        if (e.getKeyCode() == KeyEvent.VK_SPACE)
-        {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             bullets.add(new Bullet(player.x, player.y));
         }
     }
+
+    @Override
+    public void run()
+    {
+        frame.requestFocusInWindow();
+        frame.addKeyListener(this);
+        while (true) {
+            try {
+                Thread.sleep(20);
+
+                healthBar.Health = player.Health;
+
+                Enumeration<Alien> AlienEnum = aliens.elements();
+                while (AlienEnum.hasMoreElements()) {
+                    Alien alien = AlienEnum.nextElement();
+                    alien.move(frame);
+                    if (CheckCollision(player, alien)) {
+                        aliens.remove(alien);
+                        player.Health -= 1;
+                    }
+
+                    //Delete aliens if they hit the bottom of the screen
+                    if (alien.y > frame.getSize().height) {
+                        aliens.remove(alien);
+                    }
+
+                    Enumeration<Bullet> BulletsEnum = bullets.elements();
+                    while (BulletsEnum.hasMoreElements()) {
+                        Bullet bullet = BulletsEnum.nextElement();
+                        bullet.move(frame);
+
+                        //Delete bullets if they hit the screen
+                        if (bullet.y > frame.getSize().height || bullet.y < 0) {
+                            bullets.remove(bullet);
+                        }
+
+                        if (CheckCollision(alien, bullet)) {
+                            aliens.remove(alien);
+                            bullets.remove(bullet);
+                        }
+                    }
+                }
+            } catch (InterruptedException e) {
+            }
+            repaint();
+        }
+    }
+
+    private boolean CheckCollision(Rectangle rect1, Rectangle rect2)
+    {
+        if (rect1.intersects(rect2)) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
+    //------------------------------------------------------------------------------
+
+
+
+
+
 
     @Override
     public void keyReleased(KeyEvent e)
@@ -121,74 +171,8 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     }
 
     @Override
-    public void run()
+    public void keyTyped(KeyEvent e)
     {
-        frame.requestFocusInWindow();
-        frame.addKeyListener(this);
-        while(true)
-        {
-            try
-            {
-                healthBar.Health = player.Health;
 
-                Thread.sleep(20);
-                Enumeration<Alien> AlienEnum = aliens.elements();
-                while(AlienEnum.hasMoreElements())
-                {
-                    Alien alien = AlienEnum.nextElement();
-                    alien.move(frame);
-                    if (CheckCollision(player, alien))
-                    {
-                        aliens.remove(alien);
-                        player.Health -= 1;
-                    }
-
-                    //Delete aliens if they hit the bottom of the screen
-                    if (alien.y > frame.getSize().height)
-                    {
-                        aliens.remove(alien);
-                    }
-                }
-
-                Enumeration<Bullet> BulletsEnum = bullets.elements();
-                while(BulletsEnum.hasMoreElements())
-                {
-                    Bullet bullet = BulletsEnum.nextElement();
-                    bullet.move(frame);
-
-                    //Delete bullets if they hit the screen
-                    if (bullet.y > frame.getSize().height || bullet.y < 0)
-                    {
-                        bullets.remove(bullet);
-                    }
-                }
-
-                //Hit detection for Alien and Bullet
-                while(AlienEnum.hasMoreElements())
-                {
-                    while(BulletsEnum.hasMoreElements())
-                    {
-                        Bullet bullet = BulletsEnum.nextElement();
-                        Alien alien = AlienEnum.nextElement();
-                        if (CheckCollision(bullet, alien))
-                        {
-                            bullets.remove(bullet);
-                            aliens.remove(alien);
-                        }
-                    }
-                }
-            }
-            catch (InterruptedException e) {}
-            repaint();
-        }
-    }
-
-    private boolean CheckCollision(Rectangle rect1, Rectangle rect2)
-    {
-        if(rect1.intersects(rect2))
-        {
-            return true;
-        }
-        return false;
     }
 }

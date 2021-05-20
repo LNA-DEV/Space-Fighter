@@ -142,6 +142,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                     if (alien.y > frame.getSize().height)
                     {
                         aliens.remove(alien);
+                        player.Health--;
                     }
                 }
 

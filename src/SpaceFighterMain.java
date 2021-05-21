@@ -61,12 +61,6 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         g.setFont(gameFont);
         g.drawString("Points: " + Points, 325, 50);
 
-        if (player.Health == 0)
-        {
-            g.setColor(Color.CYAN);
-            g.drawString("Press ENTER to start the Game",25,500);
-        }
-
         player.draw(g, this);
 
         healthBar.draw(g, this);
@@ -82,6 +76,12 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         {
             Bullet bullet = BulletsEnum.nextElement();
             bullet.draw(g, this);
+        }
+
+        if (player.Health == 0)
+        {
+            g.setColor(Color.CYAN);
+            g.drawString("Press ENTER to start the Game",30,500);
         }
     }
 
@@ -116,7 +116,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         }
         player.move(frame);
 
-        if (e.getKeyCode() == KeyEvent.VK_SPACE&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_SPACE&& GameRunning == true && bullets.size() <= 3)
         {
             bullets.add(new Bullet(player.x, player.y));
         }

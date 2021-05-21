@@ -24,4 +24,3 @@ Also you can't shoot more than three bullets at a time.
 ### Coming Soon
 - More alien types
 - Highscores
-- Main Menu

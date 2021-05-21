@@ -18,7 +18,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     Image background;
     Font gameFont;
     int Points;
-    boolean GameRunning = true;
+    boolean GameRunning = false;
     private Timer timer;
     private Thread GameThread;
 
@@ -46,7 +46,6 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         healthBar = new HealthBar(player.Health);
 
         timer = new Timer(2000, this);
-        timer.start();
 
         GameThread = new Thread(this);
         GameThread.start();
@@ -65,7 +64,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         if (player.Health == 0)
         {
             g.setColor(Color.CYAN);
-            g.drawString("Press Enter to reload Game",60,500);
+            g.drawString("Press ENTER to start the Game",25,500);
         }
 
         player.draw(g, this);
@@ -99,28 +98,29 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     @Override
     public void keyPressed(KeyEvent e)
     {
-        if (e.getKeyCode() == KeyEvent.VK_D)
+        if (e.getKeyCode() == KeyEvent.VK_D&& GameRunning == true)
         {
             player.direction = MoveDirection.East;
         }
-        if (e.getKeyCode() == KeyEvent.VK_A)
+        if (e.getKeyCode() == KeyEvent.VK_A&& GameRunning == true)
         {
             player.direction = MoveDirection.West;
         }
-        if (e.getKeyCode() == KeyEvent.VK_W)
+        if (e.getKeyCode() == KeyEvent.VK_W&& GameRunning == true)
         {
             player.direction = MoveDirection.North;
         }
-        if (e.getKeyCode() == KeyEvent.VK_S)
+        if (e.getKeyCode() == KeyEvent.VK_S&& GameRunning == true)
         {
             player.direction = MoveDirection.South;
         }
         player.move(frame);
 
-        if (e.getKeyCode() == KeyEvent.VK_SPACE)
+        if (e.getKeyCode() == KeyEvent.VK_SPACE&& GameRunning == true)
         {
             bullets.add(new Bullet(player.x, player.y));
         }
+
         if (e.getKeyCode() == KeyEvent.VK_ENTER && GameRunning == false)
         {
             GameRunning = true;

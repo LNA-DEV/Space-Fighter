@@ -5,7 +5,7 @@ public class SpaceShip extends Rectangle
 {
     public int speed;
     public MoveDirection direction;
-    public int Health = 3;
+    public int Health = 0;
     private Image img;
 
     public SpaceShip(int x, int y)

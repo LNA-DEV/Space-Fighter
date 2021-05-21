@@ -18,6 +18,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     Image background;
     Font gameFont;
     int Points;
+    boolean GameRunning = true;
     private Timer timer;
     private Thread GameThread;
 
@@ -28,7 +29,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
 
     SpaceFighterMain()
     {
-        frame = new JFrame("SpaceInvaders");
+        frame = new JFrame("Space-Fighter");
         frame.setSize(500, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBackground(Color.DARK_GRAY);
@@ -60,6 +61,12 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         g.setColor(Color.white);
         g.setFont(gameFont);
         g.drawString("Points: " + Points, 325, 50);
+
+        if (player.Health == 0)
+        {
+            g.setColor(Color.CYAN);
+            g.drawString("Press Enter to reload Game",60,500);
+        }
 
         player.draw(g, this);
 
@@ -96,15 +103,15 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         {
             player.direction = MoveDirection.East;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_A)
+        if (e.getKeyCode() == KeyEvent.VK_A)
         {
             player.direction = MoveDirection.West;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_W)
+        if (e.getKeyCode() == KeyEvent.VK_W)
         {
             player.direction = MoveDirection.North;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_S)
+        if (e.getKeyCode() == KeyEvent.VK_S)
         {
             player.direction = MoveDirection.South;
         }
@@ -113,6 +120,15 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         if (e.getKeyCode() == KeyEvent.VK_SPACE)
         {
             bullets.add(new Bullet(player.x, player.y));
+        }
+        if (e.getKeyCode() == KeyEvent.VK_ENTER && GameRunning == false)
+        {
+            GameRunning = true;
+            player.Health= 3;
+            Points = 0;
+            aliens.clear();
+            timer.start();
+            repaint();
         }
     }
 
@@ -127,54 +143,59 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
             {
                 Thread.sleep(20);
 
-                healthBar.Health = player.Health;
-
-                Enumeration<Alien> AlienEnum = aliens.elements();
-                while (AlienEnum.hasMoreElements()) {
-                    Alien alien = AlienEnum.nextElement();
-                    alien.move(frame);
-                    if (CheckCollision(player, alien))
-                    {
-                        aliens.remove(alien);
-                        player.Health -= 1;
-                    }
-
-                    //Delete aliens if they hit the bottom of the screen
-                    if (alien.y > frame.getSize().height -150)
-                    {
-                        aliens.remove(alien);
-                        player.Health--;
-                    }
-                }
-
-                Enumeration<Bullet> BulletsEnum = bullets.elements();
-                while (BulletsEnum.hasMoreElements())
+                if (GameRunning)
                 {
-                    Bullet bullet = BulletsEnum.nextElement();
-                    bullet.move(frame);
+                    healthBar.Health = player.Health;
 
-                    //Delete bullets if they hit the screen
-                    if (bullet.y > frame.getSize().height || bullet.y < 0)
+                    if (player.Health == 0)
                     {
-                        bullets.remove(bullet);
+                        GameRunning = false;
+                        timer.stop();
                     }
 
-                    //Collision detection
-                    Enumeration<Alien> AlienEnumeration = aliens.elements();
-                    while (AlienEnumeration.hasMoreElements())
-                    {
-                        Alien alien = AlienEnumeration.nextElement();
-                        if (CheckCollision(alien, bullet))
+                    Enumeration<Alien> AlienEnum = aliens.elements();
+                    while (AlienEnum.hasMoreElements()) {
+                        Alien alien = AlienEnum.nextElement();
+                        alien.move(frame);
+                        if (CheckCollision(player, alien))
                         {
                             aliens.remove(alien);
-                            bullets.remove(bullet);
-                            Points++;
+                            player.Health -= 1;
+                        }
+
+                        //Delete aliens if they hit the bottom of the screen
+                        if (alien.y > frame.getSize().height -150)
+                        {
+                            aliens.remove(alien);
+                            player.Health--;
                         }
                     }
+
+                    Enumeration<Bullet> BulletsEnum = bullets.elements();
+                    while (BulletsEnum.hasMoreElements())
+                    {
+                        Bullet bullet = BulletsEnum.nextElement();
+                        bullet.move(frame);
+
+                        //Delete bullets if they hit the screen
+                        if (bullet.y > frame.getSize().height || bullet.y < 0)
+                        {
+                            bullets.remove(bullet);
+                        }
+
+                        //Collision detection
+                        Enumeration<Alien> AlienEnumeration = aliens.elements();
+                        while (AlienEnumeration.hasMoreElements())
+                        {
+                            Alien alien = AlienEnumeration.nextElement();
+                            if (CheckCollision(alien, bullet))
+                            {
+                                aliens.remove(alien);
+                                bullets.remove(bullet);
+                                Points++;
+                            }
+                        }
                 }
-                if (player.Health == 0)
-                {
-                    System.exit(0);
                 }
             }
             catch (Exception e)

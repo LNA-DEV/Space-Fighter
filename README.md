@@ -1,4 +1,4 @@
-# SpaceInvaders
+# Space-Fighter
 This is a school project. <br>
 All game assets are made by myself. <br>
 

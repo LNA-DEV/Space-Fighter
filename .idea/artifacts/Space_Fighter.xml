@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Space-Fighter">
+    <output-path>$PROJECT_DIR$/out/artifacts/Space_Fighter</output-path>
+    <root id="archive" name="Space-Fighter.jar">
+      <element id="module-output" name="Space-Fighter" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

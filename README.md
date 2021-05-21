@@ -19,6 +19,7 @@ Also you can't shoot more than three bullets at a time.
 |S|Move south|
 |D|Move east|
 |SPACE|Shoot Laser|
+|ENTER|Restart Game (Only if GameOver)|
 
 ### Coming Soon
 - More alien types

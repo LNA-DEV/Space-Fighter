@@ -8,7 +8,7 @@ import java.util.Enumeration;
 import java.util.Random;
 import java.util.Vector;
 
-public class SpaceInvadersMain extends JPanel implements Runnable, ActionListener, KeyListener
+public class SpaceFighterMain extends JPanel implements Runnable, ActionListener, KeyListener
 {
     JFrame frame;
     SpaceShip player;
@@ -23,10 +23,10 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
     public static void main(String[] args)
     {
-        new SpaceInvadersMain();
+        new SpaceFighterMain();
     }
 
-    SpaceInvadersMain()
+    SpaceFighterMain()
     {
         frame = new JFrame("SpaceInvaders");
         frame.setSize(500, 1000);
@@ -38,7 +38,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
 
         gameFont = new Font("Microsoft Gothic UI", 0, 30);
 
-        background = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Background.gif"));
+        background = Toolkit.getDefaultToolkit().getImage(getClass().getResource("SpaceBackground.png"));
 
         player = new SpaceShip(frame.getSize().width / 2, frame.getSize().height - 120);
 
@@ -55,7 +55,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
     {
         super.paintComponent(g);
 
-        g.drawImage(background, 0, 0, this);
+        g.drawImage(background, 0, -40, this);
 
         g.setColor(Color.white);
         g.setFont(gameFont);
@@ -140,7 +140,7 @@ public class SpaceInvadersMain extends JPanel implements Runnable, ActionListene
                     }
 
                     //Delete aliens if they hit the bottom of the screen
-                    if (alien.y > frame.getSize().height)
+                    if (alien.y > frame.getSize().height -150)
                     {
                         aliens.remove(alien);
                         player.Health--;

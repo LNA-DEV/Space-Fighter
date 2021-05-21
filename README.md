@@ -9,6 +9,7 @@ You can achieve that by killing the Aliens with the Laser-Gun of your Rocket.<br
 
 #### Attention: You can't shoot and move at the same time!
 The difficulty must come from somewhere^^
+Also you can't shoot more than three bullets at a time.
 
 ### Controls
 |Key|Action|

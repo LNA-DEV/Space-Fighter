@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Enumeration;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Vector;
 
 public class SpaceFighterMain extends JPanel implements Runnable, ActionListener, KeyListener
@@ -46,6 +47,15 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         healthBar = new HealthBar(player.Health);
 
         timer = new Timer(2000, this);
+
+        try
+        {
+            AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/SpaceSound.wav");
+            audioPlayer.play();
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
 
         GameThread = new Thread(this);
         GameThread.start();
@@ -119,6 +129,13 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         if (e.getKeyCode() == KeyEvent.VK_SPACE&& GameRunning == true && bullets.size() <= 3)
         {
             bullets.add(new Bullet(player.x, player.y));
+            try {
+                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Piew.wav");
+                audioPlayer.playOnce();
+            } catch (Exception ex) {
+                System.out.println("Error with playing sound.");
+                ex.printStackTrace();
+            }
         }
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER && GameRunning == false)

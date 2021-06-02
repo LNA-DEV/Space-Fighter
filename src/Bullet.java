@@ -15,7 +15,7 @@ public class Bullet extends Rectangle
         this.width = 20;
         this.height = 64;
         direction = MoveDirection.North;
-        speed = 45;
+        speed = 20;
     }
 
     public void draw(Graphics g, Component c)

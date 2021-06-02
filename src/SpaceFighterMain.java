@@ -102,7 +102,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         int randomX = random.nextInt(frame.getSize().width - 50);
         int y = -10;
         Alien x = new Alien(randomX, y);
-        x.speed = x.speed + Points / 4;
+        x.speed = x.speed + Points / 16;
         aliens.addElement(x);
     }
 
@@ -159,7 +159,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         {
             try
             {
-                Thread.sleep(20);
+                Thread.sleep(5);
 
                 if (GameRunning)
                 {

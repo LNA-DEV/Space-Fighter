@@ -16,7 +16,7 @@ public class Alien extends Rectangle
         this.width = 55;
         this.height = 40;
         direction = MoveDirection.South;
-        speed = 2;
+        speed = 1;
     }
 
     public void draw(Graphics g, Component c)

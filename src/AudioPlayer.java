@@ -21,18 +21,14 @@ public class AudioPlayer
     public AudioPlayer(String path) throws IOException, UnsupportedAudioFileException, LineUnavailableException
     {
         filePath = path;
-
         audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
-
         clip = AudioSystem.getClip();
-
         clip.open(audioInputStream);
     }
 
     public void play()
     {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
-
         clip.start();
     }
 
@@ -56,13 +52,5 @@ public class AudioPlayer
         currentFrame = 0L;
         clip.stop();
         clip.close();
-    }
-
-    public void resetAudioStream() throws UnsupportedAudioFileException, IOException, LineUnavailableException
-    {
-        audioInputStream = AudioSystem.getAudioInputStream(
-                new File(filePath).getAbsoluteFile());
-        clip.open(audioInputStream);
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 }

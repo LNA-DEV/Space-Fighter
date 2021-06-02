@@ -102,6 +102,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         int randomX = random.nextInt(frame.getSize().width - 50);
         int y = -10;
         Alien x = new Alien(randomX, y);
+        x.speed = x.speed + Points / 4;
         aliens.addElement(x);
     }
 
@@ -130,7 +131,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         {
             bullets.add(new Bullet(player.x, player.y));
             try {
-                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Piew.wav");
+                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Laser.wav");
                 audioPlayer.playOnce();
             } catch (Exception ex) {
                 System.out.println("Error with playing sound.");
@@ -210,6 +211,13 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                                 aliens.remove(alien);
                                 bullets.remove(bullet);
                                 Points++;
+                                try {
+                                    AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/EnemyHit.wav");
+                                    audioPlayer.playOnce();
+                                } catch (Exception ex) {
+                                    System.out.println("Error with playing sound.");
+                                    ex.printStackTrace();
+                                }
                             }
                         }
                 }

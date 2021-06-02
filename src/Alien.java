@@ -6,7 +6,7 @@ public class Alien extends Rectangle
     public int type;
     public MoveDirection direction;
     private Image img;
-    public int speed;
+    public double speed;
 
     public Alien(int x, int y)
     {

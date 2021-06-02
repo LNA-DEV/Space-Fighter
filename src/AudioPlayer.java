@@ -41,7 +41,6 @@ public class AudioPlayer
     {
         clip.stop();
         clip.close();
-        resetAudioStream();
         currentFrame = 0L;
         clip.setMicrosecondPosition(0);
         this.play();

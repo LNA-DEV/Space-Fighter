@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Enumeration;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Vector;
 
 public class SpaceFighterMain extends JPanel implements Runnable, ActionListener, KeyListener
@@ -46,7 +45,8 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
 
         healthBar = new HealthBar(player.Health);
 
-        timer = new Timer(2000, this);
+        Random random = new Random();
+        timer = new Timer(random.nextInt(1800), this);
 
         try
         {
@@ -102,7 +102,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         int randomX = random.nextInt(frame.getSize().width - 50);
         int y = -10;
         Alien x = new Alien(randomX, y);
-        x.speed = x.speed + Points / 16;
+        x.speed = x.speed + Points / 30;
         aliens.addElement(x);
     }
 

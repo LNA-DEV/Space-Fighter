@@ -130,19 +130,23 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     @Override
     public void keyPressed(KeyEvent e)
     {
-        if (e.getKeyCode() == KeyEvent.VK_D&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_D && GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_RIGHT && GameRunning == true)
         {
             player.direction = MoveDirection.East;
         }
-        if (e.getKeyCode() == KeyEvent.VK_A&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_A&& GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_LEFT && GameRunning == true)
         {
             player.direction = MoveDirection.West;
         }
-        if (e.getKeyCode() == KeyEvent.VK_W&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_W&& GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_UP && GameRunning == true)
         {
             player.direction = MoveDirection.North;
         }
-        if (e.getKeyCode() == KeyEvent.VK_S&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_S&& GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_DOWN && GameRunning == true)
         {
             player.direction = MoveDirection.South;
         }

@@ -14,13 +14,20 @@ Also you can't shoot more than three bullets at a time.
 ### Controls
 |Key|Action|
 |---|------|
-|W|Move north|
-|A|Move west|
-|S|Move south|
-|D|Move east|
+|W / Up|Move north|
+|A / Left|Move west|
+|S / Down|Move south|
+|D / Right|east|
 |SPACE|Shoot Laser|
 |ENTER|Restart Game (Only if GameOver)|
 
+### Aliens
+|Alien|Special ability|
+|---|------|
+|Red|The normal alien: Nothing special.|
+|Blue|The speed alien: Moves fast.|
+|Yellow|The rotated alien: Moves east. (You can kill them but you don't have to. But don't let them hit you!!!)|
+
 ### Coming Soon
-- More alien types
 - Highscores
+- Boss

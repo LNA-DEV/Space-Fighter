@@ -103,9 +103,18 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         Random random = new Random();
         int randomX = random.nextInt(frame.getSize().width - 50);
         int y = -10;
-        Alien x = new Alien(randomX, y, AlienType.Blue);
-        x.speed = x.speed + (Points / 30) / 2;
-        aliens.addElement(x);
+
+        if(random.nextInt(11) < 6)
+        {
+            Alien x = new Alien(randomX, y, AlienType.Red);
+            x.speed = x.speed + (Points / 30) / 2;
+            aliens.addElement(x);
+        }else
+        {
+            Alien x = new Alien(randomX, y, AlienType.Blue);
+            x.speed = x.speed + (Points / 30) / 2;
+            aliens.addElement(x);
+        }
     }
 
     @Override

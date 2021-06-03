@@ -92,8 +92,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         if (player.Health == 0)
         {
             g.setColor(Color.CYAN);
-            g.drawString("Press ENTER to start",30,
-                    (Toolkit.getDefaultToolkit().getScreenSize().height /2) - 30);
+            g.drawString("Press ENTER to start",10, 40);
         }
     }
 

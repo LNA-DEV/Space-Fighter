@@ -47,7 +47,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         healthBar = new HealthBar(player.Health);
 
         Random random = new Random();
-        timer = new Timer(1800, this);
+        timer = new Timer(1200, this);
 
         try
         {
@@ -102,7 +102,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         Random random = new Random();
         int randomX = random.nextInt(frame.getSize().width - 50);
         int randomY = random.nextInt(frame.getSize().height - 80);
-        while (randomY < frame.getSize().height / 2)
+        while (randomY < frame.getSize().height - 350)
         {
             randomY = random.nextInt(frame.getSize().height - 80);
         }

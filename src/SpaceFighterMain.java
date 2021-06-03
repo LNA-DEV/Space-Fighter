@@ -181,6 +181,13 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                         {
                             aliens.remove(alien);
                             player.Health -= 1;
+                            try {
+                                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Hit.wav");
+                                audioPlayer.playOnce();
+                            } catch (Exception ex) {
+                                System.out.println("Error with playing sound.");
+                                ex.printStackTrace();
+                            }
                         }
 
                         //Delete aliens if they hit the bottom of the screen
@@ -188,6 +195,13 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                         {
                             aliens.remove(alien);
                             player.Health--;
+                            try {
+                                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Hit.wav");
+                                audioPlayer.playOnce();
+                            } catch (Exception ex) {
+                                System.out.println("Error with playing sound.");
+                                ex.printStackTrace();
+                            }
                         }
                     }
 

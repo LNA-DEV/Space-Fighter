@@ -1,5 +1,6 @@
 public enum AlienType
 {
     Red,
-    Blue
+    Blue,
+    Yellow
 }

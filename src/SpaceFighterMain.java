@@ -47,7 +47,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         healthBar = new HealthBar(player.Health);
 
         Random random = new Random();
-        timer = new Timer(random.nextInt(1800), this);
+        timer = new Timer(1800, this);
 
         try
         {
@@ -101,16 +101,27 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     {
         Random random = new Random();
         int randomX = random.nextInt(frame.getSize().width - 50);
+        int randomY = random.nextInt(frame.getSize().height - 50);
+        while (randomY < frame.getSize().height / 2)
+        {
+            randomY = random.nextInt(frame.getSize().height - 50);
+        }
         int y = -10;
 
-        if(random.nextInt(11) < 6)
-        {
-            Alien x = new Alien(randomX, y, AlienType.Red);
-            x.speed = x.speed + (Points / 30) / 2;
-            aliens.addElement(x);
-        }else
+        if(random.nextInt(100) < 30)
         {
             Alien x = new Alien(randomX, y, AlienType.Blue);
+            x.speed = x.speed + (Points / 30) / 2;
+            aliens.addElement(x);
+        }else if (random.nextInt(100) < 20)
+        {
+            Alien x = new Alien(-10, randomY , AlienType.Yellow);
+            x.speed = x.speed + (Points / 30) / 2;
+            aliens.addElement(x);
+        }
+        else
+        {
+            Alien x = new Alien(randomX, y, AlienType.Red);
             x.speed = x.speed + (Points / 30) / 2;
             aliens.addElement(x);
         }
@@ -199,7 +210,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                         }
 
                         //Delete aliens if they hit the bottom of the screen
-                        if (alien.y > frame.getSize().height -150)
+                        if (alien.y > frame.getSize().height - 50)
                         {
                             aliens.remove(alien);
                             player.Health--;
@@ -210,6 +221,10 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                                 System.out.println("Error with playing sound.");
                                 ex.printStackTrace();
                             }
+                        }
+                        if (alien.x > frame.getSize().width)
+                        {
+                            aliens.remove(alien);
                         }
                     }
 

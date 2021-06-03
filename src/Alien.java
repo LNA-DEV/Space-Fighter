@@ -7,12 +7,14 @@ public class Alien extends Rectangle
     public MoveDirection direction;
     private Image imgRed;
     private Image imgBlue;
+    private Image imgYellow;
     public double speed;
 
     public Alien(int x, int y, AlienType alienType)
     {
         imgRed = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Alien.gif"));
         imgBlue = Toolkit.getDefaultToolkit().getImage(getClass().getResource("AlienBlue.png"));
+        imgYellow = Toolkit.getDefaultToolkit().getImage(getClass().getResource("AlienYellow.png"));
         this.x = x;
         this.y = y;
         this.width = 55;
@@ -27,6 +29,12 @@ public class Alien extends Rectangle
             case Blue:
                 speed = 2;
                 break;
+            case Yellow:
+                speed = 1;
+                direction = MoveDirection.East;
+                this.width = 40;
+                this.height = 55;
+                break;
         }
     }
 
@@ -39,6 +47,9 @@ public class Alien extends Rectangle
             break;
             case Blue:
                 g.drawImage(imgBlue,this.x,this.y,c);
+                break;
+            case Yellow:
+                g.drawImage(imgYellow,this.x,this.y,c);
                 break;
         }
 

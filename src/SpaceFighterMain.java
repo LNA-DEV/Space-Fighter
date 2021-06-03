@@ -101,28 +101,27 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     {
         Random random = new Random();
         int randomX = random.nextInt(frame.getSize().width - 50);
-        int randomY = random.nextInt(frame.getSize().height - 50);
+        int randomY = random.nextInt(frame.getSize().height - 80);
         while (randomY < frame.getSize().height / 2)
         {
-            randomY = random.nextInt(frame.getSize().height - 50);
+            randomY = random.nextInt(frame.getSize().height - 80);
         }
         int y = -10;
 
         if(random.nextInt(100) < 30)
         {
             Alien x = new Alien(randomX, y, AlienType.Blue);
-            x.speed = x.speed + (Points / 30) / 2;
+            x.speed = x.speed + Points / 15;
             aliens.addElement(x);
-        }else if (random.nextInt(100) < 20)
+        }else if (random.nextInt(100) < 30)
         {
             Alien x = new Alien(-10, randomY , AlienType.Yellow);
-            x.speed = x.speed + (Points / 30) / 2;
             aliens.addElement(x);
         }
         else
         {
             Alien x = new Alien(randomX, y, AlienType.Red);
-            x.speed = x.speed + (Points / 30) / 2;
+            x.speed = x.speed + Points / 10;
             aliens.addElement(x);
         }
     }
@@ -214,7 +213,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                         }
 
                         //Delete aliens if they hit the bottom of the screen
-                        if (alien.y > frame.getSize().height - 50)
+                        if (alien.y > frame.getSize().height - 80)
                         {
                             aliens.remove(alien);
                             player.Health--;

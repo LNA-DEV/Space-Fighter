@@ -92,7 +92,8 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         if (player.Health == 0)
         {
             g.setColor(Color.CYAN);
-            g.drawString("Press ENTER to start the Game",30,500);
+            g.drawString("Press ENTER to start",30,
+                    (Toolkit.getDefaultToolkit().getScreenSize().height /2) - 30);
         }
     }
 
@@ -103,7 +104,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         int randomX = random.nextInt(frame.getSize().width - 50);
         int y = -10;
         Alien x = new Alien(randomX, y);
-        x.speed = x.speed + Points / 30;
+        x.speed = x.speed + (Points / 30) / 2;
         aliens.addElement(x);
     }
 
@@ -160,7 +161,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         {
             try
             {
-                Thread.sleep(5);
+                Thread.sleep(10);
 
                 if (GameRunning)
                 {

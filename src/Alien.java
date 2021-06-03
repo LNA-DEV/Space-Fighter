@@ -3,25 +3,56 @@ import java.awt.*;
 
 public class Alien extends Rectangle
 {
-    public int type;
+    public AlienType type;
     public MoveDirection direction;
-    private Image img;
+    private Image imgRed;
+    private Image imgBlue;
+    private Image imgYellow;
     public double speed;
 
-    public Alien(int x, int y)
+    public Alien(int x, int y, AlienType alienType)
     {
-        img = 	Toolkit.getDefaultToolkit().getImage(getClass().getResource("Alien.gif"));
+        imgRed = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Alien.gif"));
+        imgBlue = Toolkit.getDefaultToolkit().getImage(getClass().getResource("AlienBlue.png"));
+        imgYellow = Toolkit.getDefaultToolkit().getImage(getClass().getResource("AlienYellow.png"));
         this.x = x;
         this.y = y;
         this.width = 55;
         this.height = 40;
         direction = MoveDirection.South;
-        speed = 1;
+        type = alienType;
+        switch (type)
+        {
+            case Red:
+                speed = 1;
+                break;
+            case Blue:
+                speed = 2;
+                break;
+            case Yellow:
+                speed = 1;
+                direction = MoveDirection.East;
+                this.width = 40;
+                this.height = 55;
+                break;
+        }
     }
 
     public void draw(Graphics g, Component c)
     {
-        g.drawImage(img, this.x , this.y, c);
+        switch (type)
+        {
+            case Red:
+                g.drawImage(imgRed, this.x , this.y, c);
+            break;
+            case Blue:
+                g.drawImage(imgBlue,this.x,this.y,c);
+                break;
+            case Yellow:
+                g.drawImage(imgYellow,this.x,this.y,c);
+                break;
+        }
+
         return;
     }
 

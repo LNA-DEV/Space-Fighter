@@ -47,7 +47,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         healthBar = new HealthBar(player.Health);
 
         Random random = new Random();
-        timer = new Timer(random.nextInt(1800), this);
+        timer = new Timer(1200, this);
 
         try
         {
@@ -92,7 +92,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         if (player.Health == 0)
         {
             g.setColor(Color.CYAN);
-            g.drawString("Press ENTER to start the Game",30,500);
+            g.drawString("Press ENTER to start",10, 40);
         }
     }
 
@@ -101,28 +101,51 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     {
         Random random = new Random();
         int randomX = random.nextInt(frame.getSize().width - 50);
+        int randomY = random.nextInt(frame.getSize().height - 80);
+        while (randomY < frame.getSize().height - 350)
+        {
+            randomY = random.nextInt(frame.getSize().height - 80);
+        }
         int y = -10;
-        Alien x = new Alien(randomX, y);
-        x.speed = x.speed + Points / 30;
-        aliens.addElement(x);
+
+        if(random.nextInt(100) < 30)
+        {
+            Alien x = new Alien(randomX, y, AlienType.Blue);
+            x.speed = x.speed + Points / 15;
+            aliens.addElement(x);
+        }else if (random.nextInt(100) < 30)
+        {
+            Alien x = new Alien(-10, randomY , AlienType.Yellow);
+            aliens.addElement(x);
+        }
+        else
+        {
+            Alien x = new Alien(randomX, y, AlienType.Red);
+            x.speed = x.speed + Points / 10;
+            aliens.addElement(x);
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent e)
     {
-        if (e.getKeyCode() == KeyEvent.VK_D&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_D && GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_RIGHT && GameRunning == true)
         {
             player.direction = MoveDirection.East;
         }
-        if (e.getKeyCode() == KeyEvent.VK_A&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_A&& GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_LEFT && GameRunning == true)
         {
             player.direction = MoveDirection.West;
         }
-        if (e.getKeyCode() == KeyEvent.VK_W&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_W&& GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_UP && GameRunning == true)
         {
             player.direction = MoveDirection.North;
         }
-        if (e.getKeyCode() == KeyEvent.VK_S&& GameRunning == true)
+        if (e.getKeyCode() == KeyEvent.VK_S&& GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_DOWN && GameRunning == true)
         {
             player.direction = MoveDirection.South;
         }
@@ -160,7 +183,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         {
             try
             {
-                Thread.sleep(5);
+                Thread.sleep(10);
 
                 if (GameRunning)
                 {
@@ -180,13 +203,31 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                         {
                             aliens.remove(alien);
                             player.Health -= 1;
+                            try {
+                                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Hit.wav");
+                                audioPlayer.playOnce();
+                            } catch (Exception ex) {
+                                System.out.println("Error with playing sound.");
+                                ex.printStackTrace();
+                            }
                         }
 
                         //Delete aliens if they hit the bottom of the screen
-                        if (alien.y > frame.getSize().height -150)
+                        if (alien.y > frame.getSize().height - 80)
                         {
                             aliens.remove(alien);
                             player.Health--;
+                            try {
+                                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Hit.wav");
+                                audioPlayer.playOnce();
+                            } catch (Exception ex) {
+                                System.out.println("Error with playing sound.");
+                                ex.printStackTrace();
+                            }
+                        }
+                        if (alien.x > frame.getSize().width)
+                        {
+                            aliens.remove(alien);
                         }
                     }
 

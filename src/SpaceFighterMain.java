@@ -30,7 +30,8 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     SpaceFighterMain()
     {
         frame = new JFrame("Space-Fighter");
-        frame.setSize(500, 1000);
+        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().height/2,
+                Toolkit.getDefaultToolkit().getScreenSize().height - 75);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBackground(Color.DARK_GRAY);
         frame.add(this);
@@ -69,7 +70,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
 
         g.setColor(Color.white);
         g.setFont(gameFont);
-        g.drawString("Points: " + Points, 325, 50);
+        g.drawString("Points: " + Points, 10, 100);
 
         player.draw(g, this);
 

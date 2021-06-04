@@ -8,7 +8,7 @@ public class HighScoreManager
     public static int LoadScoreFromFile()
     {
         try {
-            File file = new File("./SaveGame/HighScore.sfsf");
+            File file = new File(System.getProperty("user.dir") + "/SaveGame/HighScore.sfsf");
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextInt()) {
                 HighScore = scanner.nextInt();
@@ -27,7 +27,7 @@ public class HighScoreManager
         {
             HighScore = Score;
             try {
-                FileOutputStream outputStream = new FileOutputStream("./SaveGame/HighScore.sfsf");
+                FileOutputStream outputStream = new FileOutputStream(System.getProperty("user.dir") + "/SaveGame/HighScore.sfsf");
                 byte[] strToBytes = String.valueOf(HighScore).getBytes();
                 outputStream.write(strToBytes);
                 outputStream.close();

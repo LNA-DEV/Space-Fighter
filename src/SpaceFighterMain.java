@@ -50,8 +50,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         healthBar = new HealthBar(player.Health);
 
         try {
-            BossPlayer = new AudioPlayer("./Resources/Soundtrack/BossSpirit.wav");
-
+            BossPlayer = new AudioPlayer(System.getProperty("user.dir") +"/Soundtrack/BossSpirit.wav");
         } catch (Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
@@ -61,7 +60,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         timer = new Timer(1200, this);
 
         try {
-            AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/SpaceSound.wav");
+            AudioPlayer audioPlayer = new AudioPlayer(System.getProperty("user.dir") +"/Soundtrack/SpaceSound.wav");
             audioPlayer.play();
         } catch (Exception ex) {
             System.out.println("Error with playing sound.");
@@ -157,7 +156,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
         if (e.getKeyCode() == KeyEvent.VK_SPACE && GameRunning == true && bullets.size() <= 3) {
             bullets.add(new Bullet(player.x, player.y));
             try {
-                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Laser.wav");
+                AudioPlayer audioPlayer = new AudioPlayer(System.getProperty("user.dir") +"/Soundtrack/Laser.wav");
                 audioPlayer.playOnce();
             } catch (Exception ex) {
                 System.out.println("Error with playing sound.");
@@ -211,7 +210,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                             aliens.remove(alien);
                             player.Health -= 1;
                             try {
-                                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Hit.wav");
+                                AudioPlayer audioPlayer = new AudioPlayer(System.getProperty("user.dir") +"/Soundtrack/Hit.wav");
                                 audioPlayer.playOnce();
                             } catch (Exception ex) {
                                 System.out.println("Error with playing sound.");
@@ -238,7 +237,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                             aliens.remove(alien);
                             player.Health--;
                             try {
-                                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Hit.wav");
+                                AudioPlayer audioPlayer = new AudioPlayer(System.getProperty("user.dir") +"/Soundtrack/Hit.wav");
                                 audioPlayer.playOnce();
                             } catch (Exception ex) {
                                 System.out.println("Error with playing sound.");
@@ -270,7 +269,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                                 Points += 15;
                             }
                             try {
-                                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/EnemyHit.wav");
+                                AudioPlayer audioPlayer = new AudioPlayer(System.getProperty("user.dir") +"/Soundtrack/EnemyHit.wav");
                                 audioPlayer.playOnce();
                             } catch (Exception ex) {
                                 System.out.println("Error with playing sound.");
@@ -287,7 +286,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                                 bullets.remove(bullet);
                                 Points++;
                                 try {
-                                    AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/EnemyHit.wav");
+                                    AudioPlayer audioPlayer = new AudioPlayer(System.getProperty("user.dir") +"/Soundtrack/EnemyHit.wav");
                                     audioPlayer.playOnce();
                                 } catch (Exception ex) {
                                     System.out.println("Error with playing sound.");

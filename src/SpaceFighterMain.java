@@ -17,10 +17,13 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     Vector<Bullet> bullets = new Vector<>();
     Image background;
     Font gameFont;
+    Boss boss;
     int Points;
     boolean GameRunning = false;
     private Timer timer;
     private Thread GameThread;
+    AudioPlayer BossPlayer;
+    Random random = new Random();
 
     public static void main(String[] args)
     {
@@ -30,7 +33,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     SpaceFighterMain()
     {
         frame = new JFrame("Space-Fighter");
-        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().height/2,
+        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().height / 2,
                 Toolkit.getDefaultToolkit().getScreenSize().height - 75);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBackground(Color.DARK_GRAY);
@@ -46,11 +49,18 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
 
         healthBar = new HealthBar(player.Health);
 
+        try {
+            BossPlayer = new AudioPlayer("./Resources/Soundtrack/BossSpirit.wav");
+
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+
         Random random = new Random();
         timer = new Timer(1200, this);
 
-        try
-        {
+        try {
             AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/SpaceSound.wav");
             audioPlayer.play();
         } catch (Exception ex) {
@@ -76,52 +86,47 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
 
         healthBar.draw(g, this);
 
+        if (boss != null) {
+            boss.draw(g, this);
+        }
+
         Enumeration<Alien> AlienEnum = aliens.elements();
-        while (AlienEnum.hasMoreElements())
-        {
+        while (AlienEnum.hasMoreElements()) {
             Alien alien = AlienEnum.nextElement();
             alien.draw(g, this);
         }
         Enumeration<Bullet> BulletsEnum = bullets.elements();
-        while (BulletsEnum.hasMoreElements())
-        {
+        while (BulletsEnum.hasMoreElements()) {
             Bullet bullet = BulletsEnum.nextElement();
             bullet.draw(g, this);
         }
 
-        if (player.Health == 0)
-        {
+        if (player.Health == 0) {
             g.setColor(Color.CYAN);
-            g.drawString("Press ENTER to start",10, 40);
+            g.drawString("Press ENTER to start", 10, 40);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        Random random = new Random();
         int randomX = random.nextInt(frame.getSize().width - 50);
         int randomY = random.nextInt(frame.getSize().height - 80);
-        while (randomY < frame.getSize().height - 350)
-        {
+        while (randomY < frame.getSize().height - 350) {
             randomY = random.nextInt(frame.getSize().height - 80);
         }
         int y = -10;
 
-        if(random.nextInt(100) < 30)
-        {
+        if (random.nextInt(100) < 30) {
             Alien x = new Alien(randomX, y, AlienType.Blue);
             x.speed = x.speed + Points / 15;
             aliens.addElement(x);
-        }else if (random.nextInt(100) < 30)
-        {
-            Alien x = new Alien(-10, randomY , AlienType.Yellow);
+        } else if (random.nextInt(100) < 30) {
+            Alien x = new Alien(-10, randomY, AlienType.Yellow);
             aliens.addElement(x);
-        }
-        else
-        {
+        } else {
             Alien x = new Alien(randomX, y, AlienType.Red);
-            x.speed = x.speed + Points / 10;
+            x.speed = x.speed + Points / 15;
             aliens.addElement(x);
         }
     }
@@ -130,29 +135,24 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     public void keyPressed(KeyEvent e)
     {
         if (e.getKeyCode() == KeyEvent.VK_D && GameRunning == true ||
-                e.getKeyCode() == KeyEvent.VK_RIGHT && GameRunning == true)
-        {
+                e.getKeyCode() == KeyEvent.VK_RIGHT && GameRunning == true) {
             player.direction = MoveDirection.East;
         }
-        if (e.getKeyCode() == KeyEvent.VK_A&& GameRunning == true ||
-                e.getKeyCode() == KeyEvent.VK_LEFT && GameRunning == true)
-        {
+        if (e.getKeyCode() == KeyEvent.VK_A && GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_LEFT && GameRunning == true) {
             player.direction = MoveDirection.West;
         }
-        if (e.getKeyCode() == KeyEvent.VK_W&& GameRunning == true ||
-                e.getKeyCode() == KeyEvent.VK_UP && GameRunning == true)
-        {
+        if (e.getKeyCode() == KeyEvent.VK_W && GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_UP && GameRunning == true) {
             player.direction = MoveDirection.North;
         }
-        if (e.getKeyCode() == KeyEvent.VK_S&& GameRunning == true ||
-                e.getKeyCode() == KeyEvent.VK_DOWN && GameRunning == true)
-        {
+        if (e.getKeyCode() == KeyEvent.VK_S && GameRunning == true ||
+                e.getKeyCode() == KeyEvent.VK_DOWN && GameRunning == true) {
             player.direction = MoveDirection.South;
         }
         player.move(frame);
 
-        if (e.getKeyCode() == KeyEvent.VK_SPACE&& GameRunning == true && bullets.size() <= 3)
-        {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && GameRunning == true && bullets.size() <= 3) {
             bullets.add(new Bullet(player.x, player.y));
             try {
                 AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/Laser.wav");
@@ -163,11 +163,12 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
             }
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_ENTER && GameRunning == false)
-        {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER && GameRunning == false) {
             GameRunning = true;
-            player.Health= 3;
+            player.Health = 3;
             Points = 0;
+            boss = null;
+            BossPlayer.pause();
             aliens.clear();
             timer.start();
             repaint();
@@ -179,28 +180,32 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
     {
         frame.requestFocusInWindow();
         frame.addKeyListener(this);
-        while (true)
-        {
-            try
-            {
+        while (true) {
+            try {
                 Thread.sleep(10);
 
-                if (GameRunning)
-                {
+                if (GameRunning) {
                     healthBar.Health = player.Health;
-
-                    if (player.Health == 0)
-                    {
+                    if (player.Health == 0) {
                         GameRunning = false;
                         timer.stop();
+                    }
+
+                    if (Points % 50 == 0 && Points != 0) {
+                        int randomX = random.nextInt(frame.getSize().width - 50);
+                        boss = new Boss(randomX, -100);
+                    }
+
+                    if (boss != null) {
+                        boss.move(frame);
+                        BossPlayer.play();
                     }
 
                     Enumeration<Alien> AlienEnum = aliens.elements();
                     while (AlienEnum.hasMoreElements()) {
                         Alien alien = AlienEnum.nextElement();
                         alien.move(frame);
-                        if (CheckCollision(player, alien))
-                        {
+                        if (CheckCollision(player, alien)) {
                             aliens.remove(alien);
                             player.Health -= 1;
                             try {
@@ -212,9 +217,22 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                             }
                         }
 
-                        //Delete aliens if they hit the bottom of the screen
-                        if (alien.y > frame.getSize().height - 80)
+                        if (boss != null && CheckCollision(player, boss))
                         {
+                            boss = null;
+                            player.Health -= 2;
+                            BossPlayer.pause();
+                        }
+
+                        if (boss != null && boss.y > frame.getSize().height - 80)
+                        {
+                            boss = null;
+                            player.Health -= 3;
+                            BossPlayer.pause();
+                        }
+
+                        //Delete aliens if they hit the screen
+                            if (alien.y > frame.getSize().height - 80) {
                             aliens.remove(alien);
                             player.Health--;
                             try {
@@ -225,31 +243,44 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                                 ex.printStackTrace();
                             }
                         }
-                        if (alien.x > frame.getSize().width)
-                        {
+                        if (alien.x > frame.getSize().width) {
                             aliens.remove(alien);
                         }
                     }
 
                     Enumeration<Bullet> BulletsEnum = bullets.elements();
-                    while (BulletsEnum.hasMoreElements())
-                    {
+                    while (BulletsEnum.hasMoreElements()) {
                         Bullet bullet = BulletsEnum.nextElement();
                         bullet.move(frame);
 
                         //Delete bullets if they hit the screen
-                        if (bullet.y > frame.getSize().height || bullet.y < 0)
-                        {
+                        if (bullet.y > frame.getSize().height || bullet.y < 0) {
                             bullets.remove(bullet);
+                            Points--;
+                        }
+
+                        if (boss != null && CheckCollision(bullet, boss)) {
+                            boss.lifes--;
+                            bullets.remove(bullet);
+                            if (boss.lifes == 0) {
+                                boss = null;
+                                BossPlayer.pause();
+                                Points += 15;
+                            }
+                            try {
+                                AudioPlayer audioPlayer = new AudioPlayer("./Resources/Soundtrack/EnemyHit.wav");
+                                audioPlayer.playOnce();
+                            } catch (Exception ex) {
+                                System.out.println("Error with playing sound.");
+                                ex.printStackTrace();
+                            }
                         }
 
                         //Collision detection
                         Enumeration<Alien> AlienEnumeration = aliens.elements();
-                        while (AlienEnumeration.hasMoreElements())
-                        {
+                        while (AlienEnumeration.hasMoreElements()) {
                             Alien alien = AlienEnumeration.nextElement();
-                            if (CheckCollision(alien, bullet))
-                            {
+                            if (CheckCollision(alien, bullet)) {
                                 aliens.remove(alien);
                                 bullets.remove(bullet);
                                 Points++;
@@ -262,11 +293,9 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                                 }
                             }
                         }
+                    }
                 }
-                }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
             repaint();
@@ -275,23 +304,14 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
 
     private boolean CheckCollision(Rectangle rect1, Rectangle rect2)
     {
-        if (rect1.intersects(rect2))
-        {
+        if (rect1.intersects(rect2)) {
             return true;
         }
         return false;
     }
 
 
-
-
-
-
     //------------------------------------------------------------------------------
-
-
-
-
 
 
     @Override

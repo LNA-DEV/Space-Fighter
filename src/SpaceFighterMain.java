@@ -267,6 +267,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                                 boss = null;
                                 BossPlayer.pause();
                                 Points += 15;
+                                player.Health++;
                             }
                             try {
                                 AudioPlayer audioPlayer = new AudioPlayer(System.getProperty("user.dir") +"/Soundtrack/EnemyHit.wav");

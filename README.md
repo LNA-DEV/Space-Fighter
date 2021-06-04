@@ -28,7 +28,4 @@ If your bullets don't hit one of the aliens your score decreases by one.
 |Red|The normal alien: Nothing special.|
 |Blue|The speed alien: Moves fast.|
 |Yellow|The rotated alien: Moves east. (You can kill them but you don't have to. But don't let them hit your rocket!!!)|
-|Boss|The boss: Has ten lifes. If he hits the earth you take three Damage-Points. If you hit the Boss with your Rocket you only take two Damage-Points.
-
-### Coming Soon
-- Highscores
+|Boss|The boss: Has ten lifes. If he hits the earth you take three Damage-Points. If you hit the Boss with your Rocket you only take two Damage-Points. If you kill him you get 15 points and an extra life.

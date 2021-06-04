@@ -1,3 +1,5 @@
+import com.sun.org.apache.xml.internal.security.utils.HelperNodeList;
+
 import java.awt.*;
 
 public class HealthBar extends Rectangle
@@ -14,17 +16,9 @@ public class HealthBar extends Rectangle
 
     public void draw(Graphics g, Component c)
     {
-        if (Health >= 1)
+        for (int i = 10; i <= (Health * 60) - 10; i += 60)
         {
-            g.drawImage(img, 10 , 10, c);
-        }
-        if (Health >= 2)
-        {
-            g.drawImage(img, 70 , 10, c);
-        }
-        if (Health == 3)
-        {
-            g.drawImage(img, 130 , 10, c);
+            g.drawImage(img, i , 10, c);
         }
         return;
     }

@@ -101,6 +101,8 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
             bullet.draw(g, this);
         }
 
+        g.drawString("HighScore: " + HighScoreManager.LoadScoreFromFile(), 10, 150);
+
         if (player.Health == 0) {
             g.setColor(Color.CYAN);
             g.drawString("Press ENTER to start", 10, 40);
@@ -294,6 +296,7 @@ public class SpaceFighterMain extends JPanel implements Runnable, ActionListener
                             }
                         }
                     }
+                    HighScoreManager.newScore(Points);
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());

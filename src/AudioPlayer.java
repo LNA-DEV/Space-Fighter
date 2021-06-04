@@ -52,4 +52,10 @@ public class AudioPlayer
         clip.stop();
         clip.close();
     }
+
+    public void pause()
+    {
+        this.currentFrame = this.clip.getMicrosecondPosition();
+        clip.stop();
+    }
 }

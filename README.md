@@ -1,5 +1,6 @@
 # Space-Fighter
-![Download](https://lna-dev.itch.io/space-fighter)
+[Download](https://lna-dev.itch.io/space-fighter)<br>
+<br>
 This is a school project. <br>
 All game assets are made by myself. <br>
 

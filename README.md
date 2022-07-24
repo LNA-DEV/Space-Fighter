@@ -1,19 +1,23 @@
 # Space-Fighter
+
+
+
 [Download](https://lna-dev.itch.io/space-fighter)<br>
-This is a school project. <br>
+This is a school project 🏫<br>
+
 All game assets are made by myself. <br>
 
-### Goal
+### Goal 🚀
 It's a game where you can conrol a rocket.<br> 
 The goal is that none of the Aliens hit the rocket **or** the bottom of the screen / earth.<br>
 You can achieve that by killing the Aliens with the Laser-Gun of your rocket.<br>
 
-#### Attention: You can't shoot and move at the same time!
+#### ⚠️ Attention: You can't shoot and move at the same time!
 The difficulty must come from somewhere^^ <br>
 Also you can't shoot more than three bullets at a time.<br>
 If your bullets don't hit one of the aliens your score decreases by one.
 
-### Controls
+### Controls 🕹️
 |Key|Action|
 |---|------|
 |W / Up|Move north|
@@ -23,7 +27,7 @@ If your bullets don't hit one of the aliens your score decreases by one.
 |SPACE|Shoot Laser|
 |ENTER|Restart Game (Only if GameOver)|
 
-### Aliens
+### Aliens 👾
 |Alien|Special Ability|
 |---|------|
 |Red|The normal alien: Nothing special.|

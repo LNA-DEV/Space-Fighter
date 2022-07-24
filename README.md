@@ -1,5 +1,10 @@
 # Space-Fighter
-This is a school project 🏫 <br>
+
+
+
+[Download](https://lna-dev.itch.io/space-fighter)<br>
+This is a school project 🏫<br>
+
 All game assets are made by myself. <br>
 
 ### Goal 🚀

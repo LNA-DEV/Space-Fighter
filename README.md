@@ -1,5 +1,5 @@
 # Space-Fighter
-This is a school project. <br>
+This is a school project 🏫 <br>
 All game assets are made by myself. <br>
 
 ### Goal 🚀
